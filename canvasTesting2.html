@@ -1,0 +1,85 @@
+<html>
+
+<head>
+    <style>
+        canvas {
+            height: 100%;
+            width: 100%;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas>
+
+    </canvas>
+    <p id="info">
+        asdf
+    </p>
+    <button onclick="context.strokeStyle='blue'">blue</button>
+    <button onclick="context.strokeStyle='green'">green</button>
+    <button onclick="context.strokeStyle='yellow'">yellow</button>
+    <button onclick="context.strokeStyle='red'">red</button>
+    <button onclick="context.strokeStyle='orange'">orange</button>
+    <button onclick="context.strokeStyle='purple'">purple</button>
+    <button onclick="context.strokeStyle='white'">eraser</button>
+    <button onclick="context.clearRect(0,0,context.canvas.width,context.canvas.height);">Clear</button>
+    <script>
+        let currentPosition = previousPosition = [0, 0];
+        let mouse = {
+            x: 0,
+            y: 0,
+            clicked: false,
+            lastPosition: [0, 0]
+        }
+        let canvas = document.getElementsByTagName("canvas")[0];
+        let canvasHeight = canvas.height;
+        let canvasWidth = canvas.width;
+        let context = canvas.getContext('2d');
+        context.canvas.height = context.canvas.width = 1000;
+        context.canvas.height = window.innerHeight;
+        context.canvas.width = window.innerWidth;
+        context.lineWidth = 10;
+        context.lineCap = "round";
+        context.miterLimit=2;
+        canvas.addEventListener('mousedown', (event) => {
+            mouse.clicked = true;
+            console.log(event);
+            context.moveTo(mouse.x, mouse.y);
+            context.stroke();
+        });
+        canvas.addEventListener('mouseup', (event) => {
+            mouse.clicked = false;
+            context.moveTo(mouse.x, mouse.y);
+            context.beginPath();
+        });
+        canvas.addEventListener('mousemove', (event) => {
+            //console.log(event.clientX, event.clientY, mouse.clicked);
+            mouse.x = event.offsetX;
+            mouse.y = event.offsetY;
+            //mouse.x = event.clientX*3/4;
+            //mouse.y = event.clientY*2/5;
+            document.getElementById('info').innerHTML = `X:${mouse.x} Y:${mouse.y}`;
+            if (mouse.clicked) {
+                step();
+            }
+
+
+
+        })
+
+        function step(time, lastTime) {
+            console.log(mouse.x, mouse.y);
+
+
+            context.lineTo(mouse.x, mouse.y);
+            context.stroke();
+
+
+
+        }
+    </script>
+</body>
+
+</html>

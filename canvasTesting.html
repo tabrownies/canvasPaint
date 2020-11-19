@@ -1,0 +1,52 @@
+<html>
+
+<head>
+    <style>
+        canvas {
+            height: 300px;
+            width: 600px;
+            border: 2px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas>
+
+    </canvas>
+    <button onclick="context.fillStyle='blue'">blue</button>
+    <button onclick="context.fillStyle='green'">green</button>
+    <button onclick="context.fillStyle='yellow'">yellow</button>
+    <button onclick="context.fillStyle='red'">red</button>
+    <button onclick="context.fillStyle='orange'">orange</button>
+    <button onclick="context.fillStyle='purple'">purple</button>
+    <script>
+        let mouse = {
+            x: 0,
+            y: 0,
+            clicked: false
+        }
+        let canvas = document.getElementsByTagName("canvas")[0];
+        let canvasHeight = canvas.height;
+        let canvasWidth = canvas.width;
+        console.log(canvasHeight,canvasWidth);
+        let context = canvas.getContext('2d');
+        context.fillStyle = "#FF0000";
+        canvas.addEventListener('mousedown', (event) => {
+            mouse.clicked = true;
+        });
+        canvas.addEventListener('mouseup', (event) => {
+            mouse.clicked = false;
+        });
+        canvas.addEventListener('mousemove', (event) => {
+            console.log(event.clientX, event.clientY, mouse.clicked);
+            if (mouse.clicked) {
+                mouse.x = event.clientX;
+                mouse.y = event.clientY;
+                context.fillRect(mouse.x/2, mouse.y/2, 6, 6);
+            }
+        })
+    </script>
+</body>
+
+</html>
